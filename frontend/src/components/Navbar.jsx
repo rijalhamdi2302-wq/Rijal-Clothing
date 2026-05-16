@@ -11,7 +11,6 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 bg-cream border-b border-sand">
       <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-        {/* Logo */}
         <Link to="/" className="font-display font-bold text-xl tracking-tight text-ink">
           RIJAL<span className="text-rust">.</span>
         </Link>
@@ -19,11 +18,10 @@ export default function Navbar() {
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
           <Link to="/" className={`nav-link ${loc.pathname === '/' ? 'active' : ''}`}>Shop</Link>
+          <Link to="/track" className={`nav-link ${loc.pathname.startsWith('/track') ? 'active' : ''}`}>Track Order</Link>
           <Link to="/cart" className="relative">
             <ShoppingBag size={18} className="text-ink" />
-            {count > 0 && (
-              <span className="badge">{count}</span>
-            )}
+            {count > 0 && <span className="badge">{count}</span>}
           </Link>
         </div>
 
@@ -43,6 +41,7 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden border-t border-sand bg-cream px-4 py-4 space-y-4">
           <Link to="/" className="nav-link block" onClick={() => setOpen(false)}>Shop</Link>
+          <Link to="/track" className="nav-link block" onClick={() => setOpen(false)}>Track Order</Link>
           <Link to="/cart" className="nav-link block" onClick={() => setOpen(false)}>Cart ({count})</Link>
         </div>
       )}

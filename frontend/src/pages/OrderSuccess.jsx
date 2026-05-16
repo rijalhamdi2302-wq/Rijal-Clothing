@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { CheckCircle } from 'lucide-react'
+import { CheckCircle, Search } from 'lucide-react'
 import api from '../utils/api'
 
 export default function OrderSuccess() {
@@ -16,18 +16,32 @@ export default function OrderSuccess() {
       <CheckCircle size={56} className="mx-auto text-sage mb-6" />
       <h1 className="font-display text-4xl font-bold mb-3">Order Placed!</h1>
       <p className="font-accent italic text-bark text-lg mb-8">
-        Thank you. Your order is being reviewed. We'll reach out shortly.
+        Thank you. Your order is being reviewed. We'll process it shortly.
       </p>
 
+      {/* Track Order CTA — most important */}
+      <div className="card p-5 mb-6 bg-ink text-cream border-0">
+        <p className="font-mono text-xs text-bark tracking-widest uppercase mb-2">Save This</p>
+        <p className="font-display text-lg font-semibold text-cream mb-1">Your Order ID</p>
+        <p className="font-mono text-rust text-sm break-all mb-4 bg-charcoal px-3 py-2 select-all">
+          {orderId}
+        </p>
+        <p className="text-sand/60 text-xs font-body mb-4">
+          Use this ID to track your order status anytime
+        </p>
+        <Link
+          to={`/track/${orderId}`}
+          className="btn-primary w-full flex items-center justify-center gap-2"
+        >
+          <Search size={14} /> Track My Order
+        </Link>
+      </div>
+
       {order && (
-        <div className="card p-6 text-left mb-8">
+        <div className="card p-6 text-left mb-6">
           <p className="font-mono text-xs text-bark uppercase tracking-wider mb-4">Order Details</p>
 
           <div className="space-y-2 mb-4">
-            <div className="flex justify-between text-sm">
-              <span className="text-bark">Order ID</span>
-              <span className="font-mono text-xs">{order._id}</span>
-            </div>
             <div className="flex justify-between text-sm">
               <span className="text-bark">Name</span>
               <span>{order.name}</span>
@@ -38,7 +52,7 @@ export default function OrderSuccess() {
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-bark">Status</span>
-              <span className={`tag status-${order.status} text-xs`}>{order.status}</span>
+              <span className={`tag status-${order.status} text-xs capitalize`}>{order.status}</span>
             </div>
           </div>
 
@@ -57,11 +71,11 @@ export default function OrderSuccess() {
         <p className="font-mono text-xs text-bark mb-2">Payment reminder</p>
         <p className="font-mono text-xs text-sand leading-relaxed">
           Maybank · 1234 5678 9012 · RIJAL BIN HAMDI<br />
-          Amount: RM {order ? Number(order.total).toFixed(2) : '—'}
+          Amount: <span className="text-rust">RM {order ? Number(order.total).toFixed(2) : '—'}</span>
         </p>
       </div>
 
-      <Link to="/" className="btn-primary">Continue Shopping</Link>
+      <Link to="/" className="btn-outline">Continue Shopping</Link>
     </main>
   )
 }
